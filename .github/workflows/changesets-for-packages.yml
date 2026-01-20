@@ -24,6 +24,7 @@ jobs:
     secrets:
       npm_token: ${{ secrets.npm_token }}
   changesets:
+    needs: lint
     if: ${{ github.repository == inputs.repository }}
 
     runs-on: ubuntu-latest
