@@ -2,8 +2,11 @@ name: Lint
 on:
   workflow_call:
     secrets:
+      github_token:
+        description: github token for github packages
+        required: true
       npm_token:
-        description: npm token for use
+        description: npm token for npm registry packages
         required: true
 
 jobs:
@@ -16,6 +19,7 @@ jobs:
       - name: Setup
         uses: coldsurfers/workflows/.github/actions/setup@main
         with:
+          GITHUB_TOKEN: ${{ secrets.github_token }}
           NPM_TOKEN: ${{ secrets.npm_token }}
 
       - name: Lint files
