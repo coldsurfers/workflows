@@ -5,9 +5,6 @@ on:
       github_token:
         description: github token for github packages
         required: true
-      npm_token:
-        description: npm token for npm registry packages
-        required: true
 
 jobs:
   lint:
@@ -20,7 +17,6 @@ jobs:
         uses: coldsurfers/workflows/.github/actions/setup@main
         with:
           GITHUB_TOKEN: ${{ secrets.github_token }}
-          NPM_TOKEN: ${{ secrets.npm_token }}
 
       - name: Lint files
         run: pnpm turbo run lint
