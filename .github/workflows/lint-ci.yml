@@ -2,7 +2,7 @@ name: Lint
 on:
   workflow_call:
     secrets:
-      github_token:
+      npm_token:
         description: github token for github packages
         required: true
 
@@ -16,7 +16,7 @@ jobs:
       - name: Setup
         uses: coldsurfers/workflows/.github/actions/setup@main
         with:
-          GITHUB_TOKEN: ${{ secrets.github_token }}
+          NPM_TOKEN: ${{ secrets.npm_token }}
 
       - name: Lint files
         run: pnpm turbo run lint
