@@ -18,8 +18,5 @@ jobs:
         with:
           NPM_TOKEN: ${{ secrets.npm_token }}
 
-      - name: Lint files
-        run: pnpm turbo run lint
-
-      - name: Typecheck files
-        run: pnpm turbo check:type
+      - name: Run lint and typecheck
+        run: npx lefthook run ci
