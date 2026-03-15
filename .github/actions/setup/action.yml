@@ -32,25 +32,16 @@ runs:
       shell: bash
       run: echo "store_path=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
 
-    - name: Restore dependencies
-      id: pnpm-cache
-      uses: actions/cache/restore@v4
+    - name: Cache pnpm store
+      uses: actions/cache@v4
       with:
         path: ${{ steps.get-pnpm-store-path.outputs.store_path }}
-        key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-        restore-keys: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+        key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm-
 
     - name: Install dependencies
-      if: steps.pnpm-cache.outputs.cache-hit != 'true'
       run: pnpm install --frozen-lockfile
       shell: bash
       env:
         GITHUB_TOKEN: ${{ inputs.NPM_TOKEN }}
-
-    - name: Cache dependencies
-      if: steps.pnpm-cache.outputs.cache-hit != 'true'
-      uses: actions/cache/save@v4
-      with:
-        path: |
-          **/node_modules
-        key: ${{ steps.pnpm-cache.outputs.cache-primary-key }}
